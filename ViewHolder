@@ -1,0 +1,21 @@
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+import android.content.Context;
+import android.view.View;
+import androidx.recyclerview.widget.RecyclerView;
+
+class ${Viewholder_Class} extends RecyclerView.ViewHolder {
+    
+    private Context context;
+        
+    public ${Viewholder_Class}(View itemView) {
+        super(itemView);
+        context = itemView.getContext();
+        // TODO: Create the Views here
+    }
+    
+    #if(${Item_Class} != "")
+    public void bindViews(${Item_Class} item) {
+        // TODO: Bind the views from the object here
+    }
+    #end
+}
