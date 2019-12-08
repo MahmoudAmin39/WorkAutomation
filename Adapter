@@ -1,0 +1,113 @@
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import java.util.List;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+#parse("File Header.java")
+public class ${NAME} extends #if(${Viewholder_Class} != "")RecyclerView.Adapter<${Viewholder_Class}> #else RecyclerView.Adapter#end {
+    
+    #if(${List_Item} != "")
+    private List<${List_Item}> items;
+    
+    public ${NAME}(List<${List_Item}> items) {
+        this.items = items;
+    }
+    #else
+    private List<Object> items;
+    
+    public ${NAME}(List<Object> items) {
+        this.items = items;
+    }
+    #end
+    
+    #if(${Viewholder_Class} != "")
+    @NonNull
+    @Override
+    public ${Viewholder_Class} onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        #if(${Layout_Resource_Id} != "")
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.${Layout_Resource_Id}, parent, false);
+        return new ${Viewholder_Class}(view);
+        #else
+        // TODO: Create the ListItem View
+        // TODO: Create the ListItem ViewHolder
+        return null;
+        #end
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ${Viewholder_Class} holder, int position) {
+        #if(${List_Item} != "")
+        ${List_Item} item = items.get(position);
+        #else
+        Object item = items.get(position);
+        #end
+        // TODO: Fill in your logic for binding the view.
+    }
+    #else
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        #if(${Layout_Resource_Id} != "")
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.${Layout_Resource_Id}, parent, false);
+        #else
+        // TODO: Create the ListItem View
+        #end
+        // TODO: Create the ListItem ViewHolder
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        #if(${List_Item} != "")
+        ${List_Item} item = items.get(position);
+        #else
+        Object item = items.get(position);
+        #end
+        // TODO: Fill in your logic for binding the view.
+    }
+    #end
+
+    @Override
+    public int getItemCount() {
+        if (items == null) {
+            return 0;
+        }
+        return items.size();
+    }
+    
+    #if(${List_Item} != "")
+    public void addAll(List<${List_Item}> items) {
+        this.items.clear();
+        this.items.addAll(items);
+        notifyDataSetChanged();
+    }
+    
+    public void addItem(${List_Item} item) {
+        this.items.add(item);
+        notifyItemInserted((items.size() - 1));
+    }
+    
+    public void addItemAtIndex(${List_Item} item, int index) {
+        this.items.set(index, item);
+        notifyItemChanged(index);
+    }
+    #else
+    public void addAll(List<Object> items) {
+        this.items.clear();
+        this.items.addAll(items);
+        notifyDataSetChanged();
+    }
+    
+    public void addItem(Object item) {
+        this.items.add(item);
+        notifyItemInserted((items.size() - 1));
+    }
+    
+    public void addItemAtIndex(Object item, int index) {
+        this.items.set(index, item);
+        notifyItemChanged(index);
+    }
+    #end
+}
